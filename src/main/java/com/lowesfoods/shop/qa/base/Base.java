@@ -26,7 +26,7 @@ public class Base {
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
 		driver.manage().timeouts().pageLoadTimeout(50, TimeUnit.SECONDS);
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 
 		driver.get("https://shop.lowesfoods.com/");
 		driver.findElement(By.xpath("//button[@class='close']")).click(); //close the pop-up 

@@ -1,5 +1,7 @@
 package com.lowesfoods.shop.qa.testcases;
 
+import java.util.concurrent.TimeUnit;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -26,9 +28,11 @@ public class LoginPageTest extends Base {
 
 	}
 
-	@Test(enabled = true)
+	@Test()
 	public void loginTest() {
 		dashooardPage= loginPage.login("mandeepksidhu19@gmail.com", "12345321");
+		driver.manage().timeouts().implicitlyWait(55, TimeUnit.SECONDS);
+
 
 	}
 

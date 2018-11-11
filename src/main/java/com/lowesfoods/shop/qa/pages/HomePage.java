@@ -5,6 +5,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -12,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 import com.lowesfoods.shop.qa.base.Base;
 
@@ -54,29 +56,47 @@ public class HomePage extends Base {
 		JavascriptExecutor js = (JavascriptExecutor) driver; // using JavascriptExecutor class to scroll down to the
 																// page
 		WebElement TopDeals = driver.findElement(By.xpath("/html/body/div[4]/div/div/div[3]/div/h1/span")); // TopDeals
-		js.executeScript("arguments[0].scrollIntoView();", TopDeals); // scrolling till TopDeals element visible
+		// To avoid staleElementException
+		for (int i = 0; i <= 2; i++) {
+			try {
+				js.executeScript("arguments[0].scrollIntoView();", TopDeals); // scrolling till TopDeals element visible
+				break;
+			} catch (Exception e) {
 
+				e.getMessage();
+			}
+		}
+		// Adding 1st element to the cart
 		WebElement crownbrocli = driver.findElement(
 				By.xpath("//*[@id=\"add-to-cart-button-cart-service-add-item-26487-homepage-collection\"]"));
-		crownbrocli.click();// Adding 1st element to the cart
+		crownbrocli.click();
 
 		Actions actions = new Actions(driver); // now use action class to move cursor to another element so that we can
 												// add another element
-
+		 // Adding 2nd Element to the cart
 		WebElement apples = driver.findElement(
 				By.xpath("//*[@id=\"add-to-cart-button-cart-service-add-item-25982-homepage-collection\"]"));
-
 		actions.moveToElement(apples);
-		apples.click(); // Adding 2nd Element to the cart
+		apples.click();
 
-		WebElement onions = driver.findElement(
-				By.xpath("//*[@id=\"add-to-cart-button-cart-service-add-item-280413-homepage-collection\"]"));
-		actions.moveToElement(onions).click(); // Adding 3rd element to the cart
+		// Adding 3rd element to the cart
+		WebElement tomatoes = driver.findElement(
+				By.xpath("//*[@id=\"add-to-cart-button-cart-service-add-item-254884-homepage-collection\"]"));
+		actions.moveToElement(tomatoes).click(); // Adding 3rd element to the cart
 
-		WebElement turkey = driver.findElement(By.xpath("/html/body/div[4]/div/div/div[3]/div/ol/li[4]/div/div[2]/a"));
 
-		actions.moveToElement(turkey).click(); // Adding 4th element to the cart
+		// Adding 4rd element to the cart
+		WebElement salmonFillet= driver.findElement(
+				By.xpath("//*[@id=\"add-to-cart-button-cart-service-select-item-weight-22454-homepage-collection\"]"));
+		actions.moveToElement(salmonFillet).click(); 
+        Select salmonWeight = new Select(salmonFillet); //to choose particular weight use Select Class
+		salmonWeight.selectByVisibleText("0.75 lbs"); 
 
+		/*WebElement ChickenBreast = driver.findElement(
+				By.xpath("//*[@id=\"add-to-cart-button-cart-service-add-item-265709-homepage-collection\"]"));
+//("//*[@id=\"add-to-cart-button-cart-service-add-item-265709-homepage-collection\"]
+		actions.moveToElement(ChickenBreast).click(); // Adding 4th element to the cart
+*/
 	}
 
 	// To verify all links are working fine
@@ -104,7 +124,7 @@ public class HomePage extends Base {
 
 	// To verify Produce and Floral category link clicks and load page properly
 	public ProduceAndFloralPage clickOnProduceandFloralLink() {
-		//Use for loop to make sure link got clicked
+		// Use for loop to make sure link got clicked
 		for (int i = 0; i <= 2; i++) {
 			try {
 				produceAndfloral.click();
@@ -113,23 +133,23 @@ public class HomePage extends Base {
 
 				e.getMessage();
 			}
-
 		}
 		return new ProduceAndFloralPage();
 	}
 
-	//To verify Deli and Bakery category link clicks and load page properly.
-	//like these we can write methods for all categories links and test. here I have written methods only for 2 categories
+	// To verify Deli and Bakery category link clicks and load page properly.
+	// like these we can write methods for all categories links and test. here I
+	// have written methods only for 2 categories
 	public DeliAndBakeryPage clickOnDeliAndBakeryLink() {
 		for (int i = 0; i <= 2; i++) {
 			try {
 				deliAndbakery.click();
+				
 				break;
 			} catch (Exception e) {
 
 				e.getMessage();
 			}
-
 		}
 		return new DeliAndBakeryPage();
 	}

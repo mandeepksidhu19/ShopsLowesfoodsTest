@@ -15,7 +15,8 @@ import com.lowesfoods.shop.qa.pages.HomePage;
 import com.lowesfoods.shop.qa.pages.LoginPage;
 
 public class HomePageTest extends Base {
-	private static final boolean True = false;
+
+	private static final boolean False = false;
 	// First or Home page of application
 	LoginPage loginPage;
 	HomePage homePage;
@@ -25,7 +26,6 @@ public class HomePageTest extends Base {
 	}
 
 	// test cases should be separated --independent to each other
-	// before each test cases --launch the browser and login
 	// @test --execute test case
 	// after each test case --close the browser
 	@BeforeMethod
@@ -35,18 +35,20 @@ public class HomePageTest extends Base {
 
 	}
 
-	@Test(priority=1)
+	@Test(priority = 1)
 	// adding four items into the cart
 	public void verifyItemsinCart() throws InterruptedException {
 		homePage.addItemsToCart();
+
 	}
 
-	@Test(priority=4)
-	// verifying all links working fine and loading pages correctly.
+	@Test(priority = 4, enabled = False)
+	// verifying all links working fine and no broken link.
 	public void veryifyCategoryLinks() throws Exception {
 		List<WebElement> links = driver.findElements(By.tagName("a"));
 		System.out.println("Total links are" + links.size());
 		for (int i = 0; i < links.size(); i++) {
+
 			WebElement ele = links.get(i);
 			String url = ele.getAttribute("href");
 			homePage.veryifyCategoryLinksActive(url);
@@ -54,7 +56,7 @@ public class HomePageTest extends Base {
 
 	}
 
-	@Test(priority=2)
+	@Test(priority = 2)
 	// verify Produce and Floral link works and loads page properly
 	public void verifyProduceAndFloralLink() {
 		homePage.clickOnProduceandFloralLink();
@@ -62,18 +64,20 @@ public class HomePageTest extends Base {
 
 	}
 
-	
-	@Test(priority=3)
+	@Test(priority = 3)
 	// verify Deli and Bakery link works and load page correctly
-    public void verifyDeliAndBakeryLink() {
+	public void verifyDeliAndBakeryLink() {
 		homePage.clickOnDeliAndBakeryLink();
-		System.out.println(driver.getTitle());
+        System.out.println(driver.getTitle());
 
 	}
+
+	/*
+	 * like above 2 tests we can validate all the categories links are clicking and
+	 * loading pages correctly
+	 */
 	
-	//like above 2 tests we can write validate all the categories links are clicking and loading pages correctly
-	
-	@AfterMethod
+	// @AfterMethod
 	public void tearDown() {
 		driver.quit();
 	}
